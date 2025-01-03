@@ -152,7 +152,9 @@ s.src = "//ecdn.onlineradiobox.com/js/pwidget2.min.235ca64e.js";
         </a>
     </div>
     <script>
-        pwaless.showWidget("listen-to-our-radios-by-installing-our-app");
+        document.addEventListener("DOMContentLoaded", function () {
+            pwaless.showWidget("listen-to-our-radios-by-installing-our-app");
+        });
     </script>
 </body>
 </html>
