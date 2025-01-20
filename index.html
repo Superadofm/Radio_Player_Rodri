@@ -37,13 +37,13 @@
             border: none;
             border-radius: 10px;
         }
-        .modern-button {
+        .modern-button-1 {
             display: inline-block;
             padding: 15px 30px;
             font-size: 16px;
             font-weight: bold;
             color: white;
-            background: #9400d3;
+            background: #7a00b2;
             border: none;
             border-radius: 50px;
             cursor: pointer;
@@ -51,8 +51,27 @@
             margin-top: 20px;
             transition: all 0.3s ease;
         }
-        .modern-button:hover {
+        .modern-button-1:hover {
             background: #7a00b2;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            transform: translateY(-3px);
+        }
+        .modern-button-2 {
+            display: inline-block;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background: #0096FF;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 20px;
+            padding: 15px 25px;
+            transition: all 0.3s ease;
+        }
+        .modern-button-2:hover {
+            background: #0096FF;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
             transform: translateY(-3px);
         }
@@ -147,20 +166,12 @@ s.src = "//ecdn.onlineradiobox.com/js/pwidget2.min.235ca64e.js";
 </div>
 <!--OnlineRadioBox Player widget-->
         <iframe src="https://iframe-super-radio-ado.iptv-rodri-lives.workers.dev/" allow="autoplay"></iframe>
-        <a href="https://superadofm.github.io/Radio_Player_Rodri/Junior_FM.html" class="modern-button">
+        <a href="https://superadofm.github.io/Radio_Player_Rodri/Junior_FM.html" class="modern-button-1">
             Aller à la Junior FM
         </a>
     </div>
-    <script src="https://cdn.mobsted.com/pwaless.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (typeof pwaless !== "undefined") {
-                console.log("pwaless est chargé !");
-                pwaless.showWidget("listen-to-our-radios-by-installing-our-app");
-            } else {
-                console.error("pwaless n'est pas chargé !");
-            }
-        });
-    </script>
-</body>
+    <a href="https://superadofm.github.io/Radio_Player_Rodri/Junior_FM_Fun.html" class="modern-button-2">
+            Aller à la Junior FM Fun
+    </a>
+    </body>
 </html>
