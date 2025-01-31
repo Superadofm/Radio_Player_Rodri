@@ -1,5 +1,5 @@
 # Playlist automatique
-radio = playlist("https://raw.githubusercontent.com/Superadofm/Radio_Player_Rodri/refs/heads/main/playlist.m3u")
+radio = playlist("playlist.m3u", fallible=true)
 
 # Connexion au serveur Icecast de Caster.fm
 output.icecast(%mp3, 
