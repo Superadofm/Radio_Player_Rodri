@@ -1,0 +1,34 @@
+name: Auto DJ Caster.fm
+on:  
+  push:
+  schedule:
+    - cron: '*/10 * * * *'  # Redémarre toutes les 10 minutes
+  workflow_dispatch:  # Exécuter manuellement
+
+jobs:  
+  autodj:  
+    runs-on: ubuntu-latest  
+
+    steps:  
+      - name: Cloner le dépôt  
+        uses: actions/checkout@v3  
+
+      - name: Installer Liquidsoap  
+        run: |  
+          sudo apt-get update  
+          sudo apt-get install -y liquidsoap  
+
+      - name: Lancer la diffusion (Auto DJ)  
+        run: |  
+          while true; do  
+            liquidsoap autodj.liq || break  
+          done
+
+      - name: Redémarrer Auto DJ après la fin  
+        run: |  
+          curl -X POST -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/Superadofm/Radio_Player_Rodri/actions/workflows/autodj.yml/dispatches \
+        -d '{"ref":"main"}'
+
+      
