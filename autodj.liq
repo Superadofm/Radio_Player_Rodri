@@ -1,6 +1,6 @@
 # Playlist automatique
  radio = fallback([
-  playlist("https://raw.githubusercontent.com/Superadofm/Radio_Player_Rodri/refs/heads/main/playlist.m3u")
+  playlist("http://la-radio-des-artistes-oublies.great-site.net/playlist.m3u")
 ])
 
 # Connexion au serveur Icecast de Caster.fm
