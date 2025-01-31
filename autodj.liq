@@ -1,5 +1,5 @@
 # Playlist automatique
-radio = playlist("playlist.m3u", fallible=true)
+radio = playlist("Musiques/*.mp3")
 
 # Connexion au serveur Icecast de Caster.fm
 output.icecast(%mp3, 
