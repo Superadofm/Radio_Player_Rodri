@@ -29,7 +29,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          curl -X POST -H "Authorization: token $GH_TOKEN" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/TON-PSEUDO/TON-REPO/actions/workflows/autodj.yml/dispatches \
-          -d '{"ref":"main"}'
+         curl -X POST -H "Authorization: token $GH_TOKEN" \
+         -H "Accept: application/vnd.github.v3+json" \
+         https://api.github.com/repos/Superadofm/Radio_Player_Rodri/actions/workflows/autodj.yml/dispatches \
+         -d '{"ref":"main"}'
