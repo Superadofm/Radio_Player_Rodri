@@ -1,6 +1,3 @@
-settings.log.file = "autodj.log"
-set("log.level", 3)
-
 # Playlist automatique
 radio = playlist("https://raw.githubusercontent.com/Superadofm/Radio_Player_Rodri/refs/heads/main/playlist.m3u")
 
