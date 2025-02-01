@@ -19,9 +19,16 @@ jobs:
           mkdir -p Musiques
           wget -i <(grep -E '^https?://' playlist.txt) -P Musiques
 
+      - name: Vérifier les fichiers téléchargés
+        run: |
+          ls -l Musiques
+
       - name: Mettre à jour la playlist avec des fichiers locaux
         run: |
           sed -i 's|https://.*/|file ./Musiques/|g' playlist.txt
+
+      - name: Vérifier le contenu de la playlist
+        run: cat playlist.txt
 
       - name: Installer FFmpeg
         run: sudo apt update && sudo apt install -y ffmpeg
