@@ -11,30 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Étape 1 : Cloner le dépôt
       - name: Cloner le dépôt
         uses: actions/checkout@v3
 
-      - name: Télécharger les musiques
-        run: |
-          mkdir -p Musiques
-          wget -i <(grep -E '^https?://' playlist.txt) -P Musiques
+      # Étape 2 : Vérifier le contenu du répertoire Musiques
+      - name: Vérifier les fichiers audio
+        run: ls -l Musiques || echo "Le répertoire Musiques est vide ou introuvable"
 
-      - name: Vérifier les fichiers dans le dossier Musiques
-        run: ls -l Musiques
+      # Étape 3 : Afficher le contenu de playlist.txt
+      - name: Vérifier playlist.txt
+        run: cat playlist.txt || echo "Le fichier playlist.txt est introuvable"
 
-      - name: Corriger les chemins dans playlist.txt
-        run: sed -i 's|https://.*/|file ./Musiques/|g' playlist.txt
-
-      - name: Afficher le contenu de playlist.txt
-        run: cat playlist.txt
-
+      # Étape 4 : Installer FFmpeg
       - name: Installer FFmpeg
         run: sudo apt update && sudo apt install -y ffmpeg
 
-      - name: Diffuser la radio sur YouTube
+      # Étape 5 : Diffuser la radio sur YouTube
+      - name: Diffuser la radio
         run: |
-          ffmpeg -re -stream_loop -1 -f concat -safe 0 -i playlist.txt -ignore_loop 0 -i background.gif \
-          -filter_complex "[1:v]scale=1280:720:flags=lanczos,format=yuva420p[v];[v]loop=-1:1:0[vout]" \
-          -map "[vout]" -map 0:a -c:v libx264 -crf 23 -preset veryfast -c:a aac -b:a 128k \
-          -f flv "rtmp://a.rtmp.youtube.com/live2/q0m7-ev92-uh81-juw8-ctb8"
+         ffmpeg -re -stream_loop -1 -f concat -safe 0 -i playlist.txt -i background.gif \
+         -filter_complex "[1:v]scale=1280:720:flags=lanczos,format=yuva420p,loop=-1:size=2:start=0[v];[v][0:a]concat=n=1:v=1:a=1[vout]" \
+         -map "[vout]" -c:v libx264 -crf 23 -preset veryfast -c:a aac -b:a 128k \
+         -f flv "rtmp://a.rtmp.youtube.com/live2/q0m7-ev92-uh81-juw8-ctb8"
           
