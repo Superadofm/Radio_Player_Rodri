@@ -1,9 +1,0 @@
-[build]
-  builder = "heroku/buildpacks:python"
-
-[env]
-  FFmpeg = "/usr/local/bin/ffmpeg"
-
-[[mounts]]
-  source = "Musiques"
-  destination = "/app/Musiques"
