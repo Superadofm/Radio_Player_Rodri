@@ -9,6 +9,6 @@ while true; do
            -ignore_loop 0 -i "https://raw.githubusercontent.com/Superadofm/Radio_Player_Rodri/main/background.gif" \
            -filter_complex "[1:v]scale=1280:720:flags=lanczos,format=yuva420p[v];[v]loop=-1:1:0[vout]" \
            -map "[vout]" -map 0:a -c:v libx264 -crf 23 -preset veryfast -c:a aac -b:a 128k \
-           -f flv "rtmp://a.rtmp.youtube.com/live2/VOTRE_CLE_STREAM"
+           -f flv "rtmp://a.rtmp.youtube.com/live2/q0m7-ev92-uh81-juw8-ctb8"
     sleep 5  # Relance en cas d'erreur
 done
