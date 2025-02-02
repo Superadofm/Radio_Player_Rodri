@@ -1,15 +1,16 @@
-FROM ubuntu:20.04
+FROM debian:latest
 
-RUN apt-get update && apt-get install -y icecast2
+# Installer Icecast et Liquidsoap
+RUN apt update && apt install -y icecast2 liquidsoap
 
-# Configure Icecast
-COPY icecast.xml /etc/icecast2/icecast.xml
+# Copier les fichiers de configuration
+COPY icecast.xml /etc/icecast.xml
+COPY liquidsoap_script.liq /usr/local/bin/liquidsoap_script.liq
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
 
-# Copie du fichier de configuration
-COPY liquidsoap_script.liq /etc/liquidsoap/liquidsoap_script.liq
-
+# Exposer les ports
 EXPOSE 8000
 
-CMD ["icecast2 -b -c /etc/icecast2/icecast.xml"]
-
-CMD ["liquidsoap", "/etc/liquidsoap/liquidsoap_script.liq"]
+# Lancer Icecast + Liquidsoap
+CMD ["/usr/local/bin/start.sh"]
