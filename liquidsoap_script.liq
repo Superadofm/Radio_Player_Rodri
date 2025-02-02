@@ -11,3 +11,6 @@ radio = fallback(track_sensitive=false, [live, playlist])
 
 # Envoyer le flux à Icecast
 output.icecast(%mp3, host="localhost", port=8000, password="hackme", mount="/stream", radio)
+
+# Assurez-vous que cette ligne ne contient pas d'erreur de syntaxe
+settings.log.file = "/var/log/liquidsoap.log"
