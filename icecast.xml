@@ -1,21 +1,66 @@
-<icecast>
-<limits>
-    <!-- Empêcher de lancer Icecast en tant que root -->
-    <changeowner user="icecast" group="icecast"/>
-    
-    <!-- Port d'écoute de Icecast -->
+<icecast-server>
+    <!-- Généralités -->
+    <limits>
+        <max-listeners>100</max-listeners> <!-- Nombre maximal d'auditeurs -->
+        <listen-socket>
+            <listen-address>0.0.0.0</listen-address> <!-- Adresse d'écoute -->
+            <listen-port>8000</listen-port> <!-- Port d'écoute -->
+        </listen-socket>
+    </limits>
+
+    <!-- Propriétés administratives -->
+    <hostname>localhost</hostname>
     <listen-socket>
         <listen-address>0.0.0.0</listen-address>
         <listen-port>8000</listen-port>
     </listen-socket>
-
-    <!-- Définir un emplacement et un contact administratif -->
+    
+    <!-- Propriétés administratives -->
     <location>Earth</location>
     <admin>icemaster@localhost</admin>
+    <password-hash>hackme</password-hash>
+    <changeowner user="icecast" group="icecast"/>
 
-    <!-- Autres paramètres de configuration -->
-    <max-listeners>100</max-listeners>
-    <max-server-load>4.0</max-server-load>
-    <max-slots>100</max-slots>
-</limits>
-</icecast>
+    <!-- Logs -->
+    <logging>
+        <file>./icecast.log</file> <!-- Log de Icecast -->
+    </logging>
+
+    <!-- Paramètres de diffusion -->
+    <mount>
+        <mount-name>/stream</mount-name>
+        <public>1</public> <!-- Publicement visible -->
+        <genre>Electronique</genre>
+        <loop>1</loop> <!-- Mise en boucle de la musique -->
+    </mount>
+    
+    <!-- Répertoire d'accès aux fichiers -->
+    <file-repository>/usr/local/share/icecast</file-repository>
+
+    <!-- Configuration des utilisateurs -->
+    <security>
+        <admin-user>admin</admin-user>
+        <admin-password>adminpassword</admin-password>
+    </security>
+    
+    <!-- Paramètres de performance -->
+    <performance>
+        <max-conns>100</max-conns>
+        <max-client-conns>100</max-client-conns>
+        <max-server-conns>100</max-server-conns>
+    </performance>
+
+    <!-- Serveur Icecast -->
+    <server>
+        <hostname>localhost</hostname>
+        <listen-port>8000</listen-port>
+        <listen-address>0.0.0.0</listen-address>
+        <admin-user>admin</admin-user>
+        <admin-password>adminpassword</admin-password>
+        <changeowner user="icecast" group="icecast"/>
+    </server>
+
+    <!-- Exécuter Icecast sous l'utilisateur 'icecast' -->
+    <changeowner user="icecast" group="icecast"/>
+
+</icecast-server>
