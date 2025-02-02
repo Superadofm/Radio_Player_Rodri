@@ -1,23 +1,23 @@
-<icecast>
-    <limits>
-        <clients>100</clients>
-        <sources>2</sources>
+<limits>
+    <!-- Empêcher de lancer Icecast en tant que root -->
     <changeowner user="icecast" group="icecast"/>
-    </limits>
-
-    <authentication>
-        <admin-user>admin</admin-user>
-        <admin-password>password</admin-password>
-        <source-password>hackme</source-password>
-    </authentication>
-
-    <hostname>0.0.0.0</hostname>
+    
+    <!-- Port d'écoute de Icecast -->
     <listen-socket>
-        <port>8000</port>
+        <listen-address>0.0.0.0</listen-address>
+        <listen-port>8000</listen-port>
     </listen-socket>
+</limits>
 
-    <mount>
-        <mount-name>/stream</mount-name>
-        <password>hackme</password>
-    </mount>
-</icecast>
+<limits>
+    <!-- Définir un emplacement et un contact administratif -->
+    <location>Earth</location>
+    <admin>icemaster@localhost</admin>
+</limits>
+
+<limits>
+    <!-- Autres configurations de limites si nécessaire -->
+    <max-listeners>100</max-listeners>
+    <max-server-load>4.0</max-server-load>
+    <max-slots>100</max-slots>
+</limits>
