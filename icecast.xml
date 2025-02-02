@@ -2,25 +2,17 @@
     <limits>
         <clients>100</clients>
         <sources>2</sources>
-        <queue-size>524288</queue-size>
-        <client-timeout>30</client-timeout>
-        <header-timeout>15</header-timeout>
-        <source-timeout>10</source-timeout>
-        <burst-on-connect>1</burst-on-connect>
-        <burst-size>65535</burst-size>
     </limits>
 
     <authentication>
         <admin-user>admin</admin-user>
-        <admin-password>adminpassword</admin-password>
-        <source-password>sourcepassword</source-password>
-        <relay-password>relaypassword</relay-password>
+        <admin-password>password</admin-password>
+        <source-password>hackme</source-password>
     </authentication>
 
     <hostname>0.0.0.0</hostname>
-
     <listen-socket>
-        <port>10000</port>
+        <port>8000</port>
     </listen-socket>
 
     <mount>
