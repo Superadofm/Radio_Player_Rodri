@@ -1,43 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <icecast>
     <limits>
-        <clients>100</clients>  <!-- Nombre maximum d'auditeurs -->
-        <sources>2</sources>    <!-- Nombre maximum de sources -->
+        <clients>100</clients>
+        <sources>2</sources>
         <queue-size>524288</queue-size>
         <client-timeout>30</client-timeout>
         <header-timeout>15</header-timeout>
         <source-timeout>10</source-timeout>
-        <burst-size>65536</burst-size>
+        <burst-on-connect>1</burst-on-connect>
+        <burst-size>65535</burst-size>
     </limits>
 
     <authentication>
         <admin-user>admin</admin-user>
         <admin-password>adminpassword</admin-password>
+        <source-password>sourcepassword</source-password>
+        <relay-password>relaypassword</relay-password>
     </authentication>
 
     <hostname>0.0.0.0</hostname>
-    <listen-socket>
-    <port>10000</port>
-</listen-socket>
 
+    <listen-socket>
+        <port>10000</port>
+    </listen-socket>
 
     <mount>
-        <mount-name>/stream.mp3</mount-name>  <!-- URL du flux : http://serveur:8000/stream.mp3 -->
-        <username>source</username>
-        <password>hackme</password>  <!-- Mot de passe pour l'AutoDJ -->
-        <public>1</public>
+        <mount-name>/stream</mount-name>
+        <password>hackme</password>
     </mount>
-
-    <fileserve>1</fileserve>
-
-    <logging>
-        <accesslog>/var/log/icecast/access.log</accesslog>
-        <errorlog>/var/log/icecast/error.log</errorlog>
-        <loglevel>3</loglevel>  <!-- Niveau de log : 4 = Debug, 3 = Info, 2 = Avertissement, 1 = Erreur -->
-    </logging>
-
-    <security>
-        <chroot>0</chroot>
-    </security>
 </icecast>
-          
