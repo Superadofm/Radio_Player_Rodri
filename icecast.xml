@@ -2,6 +2,7 @@
     <limits>
         <clients>100</clients>
         <sources>2</sources>
+    <changeowner user="icecast" group="icecast"/>
     </limits>
 
     <authentication>
