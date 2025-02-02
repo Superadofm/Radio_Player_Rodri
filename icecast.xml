@@ -23,7 +23,7 @@
     <mount>
         <mount-name>/stream.mp3</mount-name>  <!-- URL du flux : http://serveur:8000/stream.mp3 -->
         <username>source</username>
-        <password>sourcepassword</password>  <!-- Mot de passe pour l'AutoDJ -->
+        <password>hackme</password>  <!-- Mot de passe pour l'AutoDJ -->
         <public>1</public>
     </mount>
 
