@@ -2,6 +2,26 @@ import os
 import requests
 import subprocess
 import time
+import threading
+import http.server
+import socketserver
+
+# Petit serveur HTTP factice pour Render
+PORT = 10000
+class Handler(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"AutoDJ running...")
+
+def run_server():
+    with socketserver.TCPServer(("", PORT), Handler) as httpd:
+        print(f"Fake server running on port {PORT}")
+        httpd.serve_forever()
+
+# Lancer le serveur dans un thread séparé
+threading.Thread(target=run_server, daemon=True).start()
+
 
 # Liste des URLs des musiques extraites de la playlist.m3u (directement ou à partir de GitHub)
 urls = [
