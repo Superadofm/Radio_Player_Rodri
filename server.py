@@ -1,40 +1,49 @@
-from flask import Flask, Response
 import subprocess
 import requests
+from flask import Flask, Response
 
 app = Flask(__name__)
 
-# URL du fichier playlist.txt sur GitHub
-PLAYLIST_URL = "https://raw.githubusercontent.com/Superadofm/Radio_Player_Rodri/main/playlist.txt"
+# URL de la playlist mise à jour sur GitHub
+playlist_url = "https://raw.githubusercontent.com/Superadofm/Radio_Player_Rodri/main/playlist.txt"
 
-def download_playlist():
-    """ Télécharge et retourne la playlist en concaténant les fichiers. """
-    response = requests.get(PLAYLIST_URL)
+def get_playlist():
+    """ Récupère les URLs des musiques depuis la playlist """
+    response = requests.get(playlist_url)
     if response.status_code == 200:
-        lines = response.text.strip().split("\n")
-        file_list = "|".join(lines)  # Concaténer les fichiers MP3
-        return f"concat:{file_list}"
+        # Retourner chaque ligne de la playlist qui est déjà une URL complète
+        return [line.strip() for line in response.text.splitlines() if line.strip()]
     else:
-        return None
+        print("Erreur lors du chargement de la playlist.")
+        return []
 
 def generate_stream():
-    """ Génère un flux audio depuis la playlist avec lecture en boucle """
-    playlist = download_playlist()
+    """ Génère un flux audio à partir des fichiers dans la playlist """
+    playlist = get_playlist()
+
     if not playlist:
-        return None  # Erreur si la playlist ne peut pas être téléchargée
+        return None  # Si la playlist est vide ou ne se charge pas
     
+    # Créer la commande ffmpeg avec la playlist
+    input_files = []
+    for song in playlist:
+        input_files.append("-i")
+        input_files.append(song)
+
+    # Ajouter les options ffmpeg pour la lecture en boucle
     command = [
         "ffmpeg",
-        "-stream_loop", "-1",  # 🔄 Joue la playlist en boucle
-        "-re",
-        "-i", playlist,
+        "-stream_loop", "-1",  # Lire en boucle
+        "-re"  # Lire à la vitesse du flux
+    ] + input_files + [
         "-c:a", "aac",
         "-b:a", "128k",
-        "-f", "mp3",
-        "pipe:1"
+        "-f", "mp3",  # Format MP3 pour le flux
+        "pipe:1"  # Sortie vers stdout
     ]
-    
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+
+    # Lancer la commande ffmpeg
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return process.stdout
 
 @app.route('/stream')
@@ -47,4 +56,4 @@ def stream():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
-  
+    
