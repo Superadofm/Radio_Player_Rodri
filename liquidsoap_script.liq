@@ -1,15 +1,13 @@
-# Configuration du serveur Icecast
-server_host = "localhost"
-server_port = 8000
-server_password = "hackme"
-server_mount = "/stream"
+# Configuration Icecast
+settings.log.file = false
+set("init.daemon", false)
 
-# Charger la playlist en boucle depuis GitHub
-playlist_url = "https://superadofm.github.io/Radio_Player_Rodri/playlist.m3u"
-auto_dj = playlist(playlist_url, random=true, reload=60.)
+# Définir les sources
+playlist = playlist("/usr/local/bin/playlist.m3u", reload=1)
+live = input.http("http://localhost:8000/live", on_error=fallible=false)
 
-# Détecter si un live est en cours (depuis un logiciel comme BUTT ou Mixxx)
-live = input.harbor("8001", password="hackme")
+# Vérifier si un live est en cours, sinon AutoDJ
+radio = fallback(track_sensitive=false, [live, playlist])
 
-# Si un live est détecté, il remplace l'Auto DJ automatiquement
-radio = fallback(track_sensitive=false, [
+# Envoyer le flux à Icecast
+output.icecast(%mp3, host="localhost", port=8000, password="hackme", mount="/stream", radio)
