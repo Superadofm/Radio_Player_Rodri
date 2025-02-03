@@ -1,29 +1,8 @@
-import os
-import requests
 import subprocess
-import time
-import threading
-import http.server
-import socketserver
 
-# Petit serveur HTTP factice pour Render
-PORT = 10000
-class Handler(http.server.SimpleHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(b"AutoDJ running...")
-
-def run_server():
-    with socketserver.TCPServer(("", PORT), Handler) as httpd:
-        print(f"Fake server running on port {PORT}")
-        httpd.serve_forever()
-
-# Lancer le serveur dans un thread séparé
-threading.Thread(target=run_server, daemon=True).start()
-
-
-command = [
+def start_stream():
+    # Commande FFmpeg sous forme de liste
+    command = [
         "ffmpeg",
         "-re",  # Lecture en temps réel
         "-f", "concat", "-safe", "0",  # Lecture séquentielle de la playlist
@@ -36,7 +15,7 @@ command = [
         "-map", "[bg]",
         "-map", "[a]",
         "-c:v", "libx264",
-        "-preset", "medium",
+        "-preset", "medium",  # Vitesse normale
         "-b:v", "2500k",
         "-c:a", "aac",
         "-b:a", "128k",
@@ -44,8 +23,9 @@ command = [
         "rtmp://a.rtmp.youtube.com/live2/q0m7-ev92-uh81-juw8-ctb8"  # Remplace par ta clé YouTube
     ]
     
-    
     print("Démarrage de la diffusion en direct...")
+    
+    # Exécuter la commande
     subprocess.run(command)
 
 if __name__ == "__main__":
