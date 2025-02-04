@@ -23,7 +23,7 @@ def start_stream():
         "-c:a", "aac",
         "-b:a", "128k",
         "-f", "flv",
-        "rtmp://a.rtmp.youtube.com/live2/YOUR-STREAM-KEY"
+        "rtmp://a.rtmp.youtube.com/live2/q0m7-ev92-uh81-juw8-ctb8"
     ]
     subprocess.Popen(command)
 
