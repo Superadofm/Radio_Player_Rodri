@@ -1,47 +1,28 @@
 import subprocess
-import os
-from flask import Flask, jsonify
 
-app = Flask(__name__)
-
-@app.route("/")
-def index():
-    return "Bienvenue sur la radio en ligne !"
-
-@app.route("/start-stream")
 def start_stream():
-    playlist_url = "https://superadofm.github.io/Radio_Player_Rodri/playlist.m3u"
-    gif_url = "https://superadofm.github.io/Radio_Player_Rodri/background.gif"
-    
-    # Commande FFmpeg pour lire la playlist en boucle et le GIF en fond
+    # Commande FFmpeg pour diffuser en direct sur YouTube
     command = [
-        "ffmpeg", 
-        "-re", 
-        "-f", "concat", 
-        "-safe", "0", 
-        "-protocol_whitelist", "file,http,https,tcp,tls", 
-        "-i", playlist_url,  # Utilisation du lien direct vers la playlist
-        "-re", 
-        "-stream_loop", "-1", 
-        "-i", gif_url,  # Utilisation du lien direct vers le GIF
+        "ffmpeg",
+        "-re",  # Lecture en temps réel du flux audio
+        "-i", "https://stream.zeno.fm/hg9eg9q5quzuv",  # Flux Zeno.fm
+        "-stream_loop", "-1",  # Boucle infinie du GIF
+        "-i", "https://superadofm.github.io/Radio_Player_Rodri/background.gif",
         "-filter_complex", "[1:v]scale=1280:720[bg];[0:a]anull[a]",
-        "-map", "[bg]",
-        "-map", "[a]",
+        "-map", "[bg]",  # Vidéo = GIF en boucle
+        "-map", "0:a",  # Audio = Flux Zeno.fm
         "-c:v", "libx264",
-        "-preset", "medium",  # Réglage normal pour la vitesse
-        "-b:v", "2500k", 
-        "-c:a", "aac", 
-        "-b:a", "128k", 
-        "-f", "flv", 
-        "rtmp://a.rtmp.youtube.com/live2/YOUR-STREAM-KEY"  # Remplace avec ta clé de stream YouTube
+        "-preset", "medium",  # Qualité vidéo normale
+        "-b:v", "2500k",
+        "-c:a", "aac",
+        "-b:a", "128k",
+        "-f", "flv",
+        "rtmp://a.rtmp.youtube.com/live2/q0m7-ev92-uh81-juw8-ctb8"  # Remplace par ta clé de stream YouTube
     ]
     
-    print("Démarrage de la diffusion en direct...")
-    # Exécution de la commande FFmpeg dans un processus séparé
-    subprocess.Popen(command)  # Utilisation de Popen pour éviter de bloquer le thread principal
-
-    return jsonify({"status": "Démarrage de la diffusion en direct", "message": "Stream lancé avec succès."})
+    print("🎥 Démarrage de la diffusion en direct sur YouTube...")
+    subprocess.run(command)
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    start_stream()
     
